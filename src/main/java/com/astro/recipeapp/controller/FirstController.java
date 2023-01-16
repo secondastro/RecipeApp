@@ -1,4 +1,4 @@
-package com.astro.recipeapp.Controllers;
+package com.astro.recipeapp.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,10 +14,10 @@ public class FirstController {
     }
 
     @GetMapping("/info")
-    public  String getData(@RequestParam String name, String projectName, LocalDate date, String description) {
-        return "Имя: " + name + "; " +
-                "Название проекта: " + projectName + "; " +
-                "Дата создания проекта: " + date + "; "+
-                "Описание: " + description;
+    public  String getData() {
+        return "Имя: Треногин А.С" +'\n'+
+                "Название проекта: Книга рецептов" +'\n'+
+                "Дата создания проекта: " + LocalDate.now() +'\n'+
+                "Описание: -------";
     }
 }

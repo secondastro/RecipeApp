@@ -1,0 +1,35 @@
+GET http://localhost:8080
+
+###
+GET http://localhost:8080/info
+
+###
+POST http://localhost:8080/recipe
+Content-Type: application/json
+
+{
+  "name": "Хрен и редька",
+  "time": 5,
+  "ingredientSet": [
+    {
+      "name": "хрен",
+      "quantity": 100,
+      "measureUnit": "грамм"
+    },
+    {
+      "name": "редька",
+      "quantity": 200,
+      "measureUnit": "грамм"
+    }
+  ],
+  "steps": [
+    "Натереть хрен",
+    "Натереть редьку",
+    "Убедиться, что хрен редьки не слаще",
+    "Смешать"
+  ]
+}
+###
+GET http://localhost:8080/recipe/0
+###
+GET http://localhost:8080/ingredient/0
