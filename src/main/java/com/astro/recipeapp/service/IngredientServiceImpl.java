@@ -22,4 +22,27 @@ public class IngredientServiceImpl implements IngredientService {
     public Ingredient getIngredient(long i) {
         return ingredientMap.get(i);
     }
+
+    @Override
+    public Map<Long, Ingredient> getAllIngredients() {
+        return ingredientMap;
+    }
+
+    @Override
+    public Ingredient editIngredient(long i, Ingredient ingredient) {
+        if (ingredientMap.containsKey(i)) {
+            ingredientMap.put(i, ingredient);
+            return ingredient;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteIngredient(long id) {
+        if (ingredientMap.containsKey(id)) {
+            ingredientMap.remove(id);
+            return true;
+        }
+        return false;
+    }
 }

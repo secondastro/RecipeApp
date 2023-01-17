@@ -2,7 +2,10 @@ package com.astro.recipeapp.controller;
 
 import com.astro.recipeapp.model.Ingredient;
 import com.astro.recipeapp.service.IngredientService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ingredient")
@@ -13,13 +16,37 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
-    @PostMapping
-    public Ingredient addIngredient(@RequestBody Ingredient ingredient) {
-        return ingredientService.addIngredient(ingredient);
-    }
-
     @GetMapping("/{id}")
     public Ingredient getIngredient(@PathVariable("id") long id) {
         return ingredientService.getIngredient(id);
     }
+
+    @GetMapping
+    public Map<Long, Ingredient> getAllIngredients(){
+        return ingredientService.getAllIngredients();
+    }
+
+    @PostMapping("/add")
+    public Ingredient addIngredient(@RequestBody Ingredient ingredient) {
+        return ingredientService.addIngredient(ingredient);
+    }
+
+
+    @PutMapping("/edit/{id}")
+
+    public ResponseEntity<Ingredient> editIngredient(@PathVariable("id") long id, @RequestBody Ingredient ingredient) {
+        if (ingredientService.editIngredient(id, ingredient) != null) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteIngredient(@PathVariable("id") long id) {
+        if (ingredientService.deleteIngredient(id)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

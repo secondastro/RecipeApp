@@ -22,4 +22,26 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe getRecipe(long i) {
         return recipeMap.get(i);
     }
+    @Override
+    public Map<Long, Recipe> getAllRecipes() {
+        return recipeMap;
+    }
+
+    @Override
+    public Recipe editRecipe(long i, Recipe recipe) {
+        if (recipeMap.containsKey(i)) {
+            recipeMap.put(i, recipe);
+            return recipe;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteRecipe(long id) {
+        if (recipeMap.containsKey(id)) {
+            recipeMap.remove(id);
+            return true;
+        }
+        return false;
+    }
 }
