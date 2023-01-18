@@ -1,6 +1,7 @@
 package com.astro.recipeapp.service;
 
 import com.astro.recipeapp.model.Recipe;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -14,9 +15,13 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe addRecipe(Recipe recipe) {
+        if (StringUtils.isBlank(recipe.getName())) {
+            throw new IllegalArgumentException("Введите имя рецепта");
+        }
         recipeMap.put(this.recipeId++, recipe);
         return recipe;
     }
+
 
     @Override
     public Recipe getRecipe(long i) {
@@ -33,9 +38,11 @@ public class RecipeServiceImpl implements RecipeService {
         if (!recipeMap.containsKey(i)) {
             return null;
         }
+        if (StringUtils.isBlank(recipe.getName())) {
+            throw new IllegalArgumentException("Введите имя рецепта");
+        }
         recipeMap.put(i, recipe);
         return recipe;
-
     }
 
     @Override

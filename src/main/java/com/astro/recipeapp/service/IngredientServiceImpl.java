@@ -1,6 +1,7 @@
 package com.astro.recipeapp.service;
 
 import com.astro.recipeapp.model.Ingredient;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -14,6 +15,9 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient addIngredient(Ingredient ingredient) {
+        if (StringUtils.isBlank(ingredient.getName())) {
+            throw new IllegalArgumentException("Введите имя игредиента");
+        }
         ingredientMap.put(this.ingredientId++, ingredient);
         return ingredient;
     }
@@ -33,16 +37,19 @@ public class IngredientServiceImpl implements IngredientService {
         if (!ingredientMap.containsKey(i)) {
             return null;
         }
-        ingredientMap.put(i, ingredient);
-        return ingredient;
+        if (StringUtils.isBlank(ingredient.getName())) {
+            throw new IllegalArgumentException("Введите имя ингредиента");
+        }
+            ingredientMap.put(i, ingredient);
+            return ingredient;
     }
 
-    @Override
-    public boolean deleteIngredient(long id) {
-        if (!ingredientMap.containsKey(id)) {
-            return false;
+        @Override
+        public boolean deleteIngredient ( long id){
+            if (!ingredientMap.containsKey(id)) {
+                return false;
+            }
+            ingredientMap.remove(id);
+            return true;
         }
-        ingredientMap.remove(id);
-        return true;
     }
-}
