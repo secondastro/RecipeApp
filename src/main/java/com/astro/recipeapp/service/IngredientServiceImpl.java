@@ -30,19 +30,19 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient editIngredient(long i, Ingredient ingredient) {
-        if (ingredientMap.containsKey(i)) {
-            ingredientMap.put(i, ingredient);
-            return ingredient;
+        if (!ingredientMap.containsKey(i)) {
+            return null;
         }
-        return null;
+        ingredientMap.put(i, ingredient);
+        return ingredient;
     }
 
     @Override
     public boolean deleteIngredient(long id) {
-        if (ingredientMap.containsKey(id)) {
-            ingredientMap.remove(id);
-            return true;
+        if (!ingredientMap.containsKey(id)) {
+            return false;
         }
-        return false;
+        ingredientMap.remove(id);
+        return true;
     }
 }

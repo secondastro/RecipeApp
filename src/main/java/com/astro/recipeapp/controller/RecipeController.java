@@ -26,13 +26,13 @@ public class RecipeController {
         return recipeService.getAllRecipes();
     }
 
-    @PostMapping("/add")
+    @PostMapping
 
     public Recipe addRecipe(@RequestBody Recipe recipe) {
         return recipeService.addRecipe(recipe);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Recipe> editRecipe(@PathVariable("id") long id, @RequestBody Recipe recipe) {
         if (recipeService.editRecipe(id, recipe) != null) {
             return ResponseEntity.ok().build();
@@ -40,7 +40,7 @@ public class RecipeController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRecipe(@PathVariable("id") long id) {
         if (recipeService.deleteRecipe(id)) {
             return ResponseEntity.ok().build();

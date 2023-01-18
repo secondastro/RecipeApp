@@ -22,6 +22,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe getRecipe(long i) {
         return recipeMap.get(i);
     }
+
     @Override
     public Map<Long, Recipe> getAllRecipes() {
         return recipeMap;
@@ -29,19 +30,20 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe editRecipe(long i, Recipe recipe) {
-        if (recipeMap.containsKey(i)) {
-            recipeMap.put(i, recipe);
-            return recipe;
+        if (!recipeMap.containsKey(i)) {
+            return null;
         }
-        return null;
+        recipeMap.put(i, recipe);
+        return recipe;
+
     }
 
     @Override
     public boolean deleteRecipe(long id) {
-        if (recipeMap.containsKey(id)) {
-            recipeMap.remove(id);
-            return true;
+        if (!recipeMap.containsKey(id)) {
+            return false;
         }
-        return false;
+        recipeMap.remove(id);
+        return true;
     }
 }
