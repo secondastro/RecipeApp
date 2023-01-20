@@ -1,12 +1,16 @@
 package com.astro.recipeapp.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FilesServiceIngredientsImpl implements FilesService{
+@Service
+@Component("FilesServiceIngredients")
+public class FilesServiceIngredientsImpl implements FilesService {
     @Value("${application.file.ingredients.path}")
     private String ingredientsFilePath;
     @Value("${application.ingredients.name}")

@@ -1,6 +1,7 @@
 package com.astro.recipeapp.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Service
+@Component ("FilesServiceRecipes")
 public class FilesServiceRecipesImpl implements FilesService {
     @Value("${application.file.recipes.path}")
     private String recipesFilePath;
