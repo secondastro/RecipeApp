@@ -1,9 +1,11 @@
-package com.astro.recipeapp.service;
+package com.astro.recipeapp.service.impls;
 
+import com.astro.recipeapp.service.FilesService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,14 +33,23 @@ public class FilesServiceIngredientsImpl implements FilesService {
 
     @Override
     public String readFromFile() {
+        Path path = Path.of(ingredientsFilePath, ingredientsFileName);
         try {
-            return Files.readString(Path.of(ingredientsFilePath, ingredientsFileName));
+            if (!Files.exists(path)) {
+                Files.writeString(path, "{}");
+            }
+            return Files.readString(path);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private boolean cleanDataFile() {
+    @Override
+    public File getDataFile() {
+        return new File(ingredientsFilePath + "/" + ingredientsFileName);
+    }
+    @Override
+    public boolean cleanDataFile() {
         try {
             Path path = Path.of(ingredientsFilePath, ingredientsFileName);
             Files.deleteIfExists(path);

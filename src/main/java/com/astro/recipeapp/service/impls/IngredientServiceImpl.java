@@ -1,6 +1,8 @@
-package com.astro.recipeapp.service;
+package com.astro.recipeapp.service.impls;
 
 import com.astro.recipeapp.model.Ingredient;
+import com.astro.recipeapp.service.FilesService;
+import com.astro.recipeapp.service.IngredientService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
