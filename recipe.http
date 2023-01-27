@@ -1,0 +1,61 @@
+GET http://localhost:8080
+
+###
+GET http://localhost:8080/info
+
+###
+POST http://localhost:8080/recipe/
+Content-Type: application/json
+
+{
+  "name": "Хрен и редька",
+  "time": 5,
+  "ingredientSet": [
+    {
+      "name": "хрен",
+      "quantity": 100,
+      "measureUnit": "грамм"
+    },
+    {
+      "name": "редька",
+      "quantity": 200,
+      "measureUnit": "грамм"
+    }
+  ],
+  "steps": [
+    "Натереть хрен",
+    "Натереть редьку",
+    "Убедиться, что хрен редьки не слаще",
+    "Смешать"
+  ]
+}
+###
+POST http://localhost:8080/recipe/
+Content-Type: application/json
+
+{
+  "name": "Горох и кукуруза",
+  "time": 3,
+  "ingredientSet": [
+    {
+      "name": "горох",
+      "quantity": 150,
+      "measureUnit": "грамм"
+    },
+    {
+      "name": "кукуруза",
+      "quantity": 100,
+      "measureUnit": "грамм"
+    }
+  ],
+  "steps": [
+    "открыть горох",
+    "высыпать горох",
+    "открыть, кукурузу",
+    "высыпать кукурузу"
+  ]
+}
+###
+GET http://localhost:8080/recipe/0
+###
+GET http://localhost:8080/ingredient/0
