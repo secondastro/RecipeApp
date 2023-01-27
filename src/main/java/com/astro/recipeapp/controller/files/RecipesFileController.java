@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.Month;
 
 @RestController
 @RequestMapping("/files/recipes")
@@ -21,6 +24,21 @@ public class RecipesFileController {
 
     public RecipesFileController(@Qualifier("FilesServiceRecipes") FilesService filesService) {
         this.filesService = filesService;
+    }
+
+    @GetMapping(value = "/export/txt")
+    public ResponseEntity<InputStreamResource> downloadTxt() throws FileNotFoundException {
+        File file = filesService.getTextFile();
+        if (file.exists()) {
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+            return ResponseEntity.ok()
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=\"AllRecipes.txt\"")
+                    .contentLength(file.length())
+                .body(resource);
+        } else
+            return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/export", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +61,7 @@ public class RecipesFileController {
         filesService.cleanDataFile();
         File localFile = filesService.getDataFile();
         try (FileOutputStream fos = new FileOutputStream(localFile)) {
-            IOUtils.copy(webFile.getInputStream(),fos);
+            IOUtils.copy(webFile.getInputStream(), fos);
             return ResponseEntity.ok().build();
         } catch (IOException e) {
             e.printStackTrace();

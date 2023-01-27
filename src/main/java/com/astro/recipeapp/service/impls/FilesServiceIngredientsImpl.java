@@ -9,11 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @Service
 @Component("FilesServiceIngredients")
 public class FilesServiceIngredientsImpl implements FilesService {
-    @Value("${application.file.ingredients.path}")
+    @Value("${application.ingredients.path}")
     private String ingredientsFilePath;
     @Value("${application.ingredients.name}")
     private String ingredientsFileName;
@@ -29,6 +30,11 @@ public class FilesServiceIngredientsImpl implements FilesService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public boolean saveToTextFile(List<String> list) {
+        return false;
     }
 
     @Override
@@ -48,6 +54,12 @@ public class FilesServiceIngredientsImpl implements FilesService {
     public File getDataFile() {
         return new File(ingredientsFilePath + "/" + ingredientsFileName);
     }
+
+    @Override
+    public File getTextFile() {
+        return null;
+    }
+
     @Override
     public boolean cleanDataFile() {
         try {
@@ -59,5 +71,10 @@ public class FilesServiceIngredientsImpl implements FilesService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public boolean cleanTextFile() {
+        return false;
     }
 }

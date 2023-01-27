@@ -9,14 +9,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @Service
 @Component("FilesServiceRecipes")
 public class FilesServiceRecipesImpl implements FilesService {
-    @Value("${application.file.recipes.path}")
+    @Value("${application.recipes.path}")
     private String recipesFilePath;
     @Value("${application.recipes.name}")
     private String recipesFileName;
+
+    @Value("${application.recipes.textfile.name}")
+    private String recipesTextFileName;
 
     @Override
     public boolean saveToFile(String json) {
@@ -30,14 +34,23 @@ public class FilesServiceRecipesImpl implements FilesService {
             return false;
         }
     }
+@Override
+    public boolean saveToTextFile(List<String> list) {
+        try {
+            cleanTextFile();
+            Files.write(Path.of(recipesFilePath, recipesTextFileName), list);
+
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     public String readFromFile() {
         Path path = Path.of(recipesFilePath,recipesFileName);
         try {
-            if (!Files.exists(path)) {
-                Files.writeString(path, "{}");
-            }
             return Files.readString(path);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -47,6 +60,10 @@ public class FilesServiceRecipesImpl implements FilesService {
     @Override
     public File getDataFile() {
         return new File(recipesFilePath + "/" + recipesFileName);
+    }
+    @Override
+    public File getTextFile(){
+        return new File(recipesFilePath + "/" + recipesTextFileName);
     }
 
     @Override
@@ -61,5 +78,19 @@ public class FilesServiceRecipesImpl implements FilesService {
             return false;
         }
     }
+    @Override
+    public boolean cleanTextFile() {
+        try {
+            Path path = Path.of(recipesFilePath, recipesTextFileName);
+            Files.deleteIfExists(path);
+            Files.createFile(path);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
 

@@ -2,6 +2,7 @@ package com.astro.recipeapp.service;
 
 import com.astro.recipeapp.model.Recipe;
 
+import java.util.List;
 import java.util.Map;
 
 public interface RecipeService {
@@ -14,4 +15,5 @@ public interface RecipeService {
     Recipe editRecipe(long i, Recipe recipe);
 
     boolean deleteRecipe(long id);
+
 }
